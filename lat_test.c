@@ -34,7 +34,7 @@ static Node *make_chain(size_t bytes)
 static double measure_latency(Node *chain, size_t loops)
 {
     struct timespec t0,t1;
-    Node *p = chain;
+    Node * volatile p = chain; // volatile关键：防止优化
     clock_gettime(CLOCK_MONOTONIC, &t0);
     for(size_t i=0;i<loops;i++){
         p = p->next;
